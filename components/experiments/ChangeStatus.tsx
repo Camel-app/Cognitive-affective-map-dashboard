@@ -6,9 +6,11 @@ import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 //import { useRouter } from 'next/router';
 
-
-
-
+/**
+ * Downloads the data of the experiment as a JSON file 
+ * @param props props containing the experimentId
+ * @param cookie cookie containing the JWT 
+ */
 async function downloadData(props, cookie) {
     const experimentId = props.experimentId;
     let info = {
@@ -37,8 +39,11 @@ async function downloadData(props, cookie) {
     URL.revokeObjectURL(blobUrl);
 }
 
-
-
+/**
+ * Deletes the experiment from the database
+ * @param props props containing the experimentId
+ * @param cookie cookie containing the JWT 
+ */
 async function deleteExperiment(props, cookie) {
     const experimentId = props.experimentId;
     let info = {
@@ -53,26 +58,20 @@ async function deleteExperiment(props, cookie) {
         }
     }
     const res = await fetch(publicRuntimeConfig.DEV_URL + '/researchers/deleteExperiment', info);
-    const resData = await res.json();
-    console.log(resData);
-    
-
+    const resData = await res.json();    
 }
 
 
+/**
+ * Asks the user to confirm the deletion of the experiment
+ * @param props props containing the experimentId
+ * @param cookie cookie containing the JWT 
+ */
 function confirmDeleteExperiment(props, cookie) {
     var resp = window.prompt('Please enter the name of your experiment to confirm the deletion and press "Ok":')
-    console.log("resp:", resp);
-
-    //const router = useRouter();
 
     if(resp === document.getElementsByTagName("h1")[0].textContent){
-        console.log("delete");
         deleteExperiment(props, cookie);
-
-        //router.push('/dashboard');
-    }else{
-        console.log("not delete");
     }
   }
 
