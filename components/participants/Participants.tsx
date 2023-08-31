@@ -2,9 +2,6 @@ import { Table } from '@mantine/core';
 
 const Participants = ({ data }) => {
 
-	console.log("data:", data);
-
-
 	function getRows(data) {
 		return data.map((element) => (
 			<tr key={element.participantID}>
