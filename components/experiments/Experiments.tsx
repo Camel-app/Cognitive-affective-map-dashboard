@@ -6,25 +6,8 @@ import Link from 'next/link';
 import copyToClipboard from '../../controllers/copyClipboard';
 import UploadForm from '../uploadForm/UploadForm';
 import getConfig from 'next/config';
+import { useStyles } from '../../public/theme';
 const { publicRuntimeConfig } = getConfig();
-
-
-const useStyles = createStyles((theme) => ({
-    inner: {
-        //marginLeft: 100,
-		paddingTop: theme.spacing.xl * 2,
-		paddingBottom: theme.spacing.xl * 1,
-        maxWidth: 960,
-        marginRight: theme.spacing.xl * 3,
-
-        [theme.fn.smallerThan('md')]: {
-            maxWidth: '100%',
-            marginRight: 0,
-        }},
-		button: {
-			fontSize: "14px"
-		}
-}));
 
 
 const Experiments = ({ data }) => {

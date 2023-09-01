@@ -4,9 +4,9 @@ import { useForm } from '@mantine/hooks';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 import { useState } from 'react';
-import getConfig from "next/config";
+import { test } from 'node:test';
+import { registerUser } from '../../utils/register';
 
-const { publicRuntimeConfig } = getConfig();
 
 const RegisterPage: NextPage = () => {
     const router = useRouter();
@@ -14,30 +14,12 @@ const RegisterPage: NextPage = () => {
 	const [isError, setIsError] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
-	const registerUser = async (event) => {
-		const body = {
-			email: event.email,
-			password: event.password
-		};
-
-		const res = await fetch(
-			publicRuntimeConfig.DEV_URL + '/researchers/login',
-			{
-				body: JSON.stringify(body),
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				method: 'POST'
-			}
-		)
-
-		const result = await res.json();
-		if (res.status == 201) {
-			setCookie('auth', result.token, { path: '/', maxAge: 3600, secure: true, sameSite: true });
-			router.push('/dashboard');
-		}
-
-	};
+	
+    const res = registerUser(values) 
+    if (res.status == 201) {
+        setCookie('auth', result.token, { path: '/', maxAge: 3600, secure: true, sameSite: true });
+        router.push('/dashboard');
+    }
 
 	const form = useForm({
 		initialValues: {
@@ -86,8 +68,8 @@ const RegisterPage: NextPage = () => {
 				</form>
 			</div>
 		</>
-	)
-    
+	) 
 }
+
 
 export default RegisterPage;
