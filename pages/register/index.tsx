@@ -8,8 +8,6 @@ import { registerUser } from '../../utils/register';
 
 
 const RegisterPage: NextPage = () => {
-    const router = useRouter();
-	const [cookie, setCookie] = useCookies(["auth"]);
 	const [isError, setIsError] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
