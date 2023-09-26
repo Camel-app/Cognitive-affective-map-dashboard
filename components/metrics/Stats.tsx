@@ -1,4 +1,4 @@
-import { Title, Text, Table } from "@mantine/core";
+import { Title, Text } from "@mantine/core";
 
 export function Metrics({ data }) {
 	// get all values of all nodes

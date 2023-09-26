@@ -52,7 +52,7 @@ const Home: NextPage = () => {
 		<div>
 			<Container>
 				<div className={classes.inner}>
-					<div className={classes.contentNextImage}>
+					<div >
 						<Title className={classes.title}>
 							<span className={classes.highlight}>
 								Cognitive Affective Map tools
@@ -68,7 +68,7 @@ const Home: NextPage = () => {
 					<Image src={image.src} className={classes.image} />
 				</div>
 				<div className={classes.inner}>
-					<div className={classes.contentBelowImage}>
+					<div >
 						<List
 							mt={30}
 							spacing="sm"
@@ -78,7 +78,7 @@ const Home: NextPage = () => {
 									<IconCheck size={12} stroke={1.5} />
 								</ThemeIcon>
 							}
-							className={classes.listItems}
+							
 						>
 							<List.Item>
 								<b>Online based</b> – all our tools are running online so no

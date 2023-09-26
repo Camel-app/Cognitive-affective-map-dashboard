@@ -4,7 +4,6 @@ import { useForm } from '@mantine/hooks';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 import { useState } from 'react';
-import { test } from 'node:test';
 import { registerUser } from '../../utils/register';
 
 
@@ -13,13 +12,6 @@ const RegisterPage: NextPage = () => {
 	const [cookie, setCookie] = useCookies(["auth"]);
 	const [isError, setIsError] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
-
-	
-    const res = registerUser(values) 
-    if (res.status == 201) {
-        setCookie('auth', result.token, { path: '/', maxAge: 3600, secure: true, sameSite: true });
-        router.push('/dashboard');
-    }
 
 	const form = useForm({
 		initialValues: {
