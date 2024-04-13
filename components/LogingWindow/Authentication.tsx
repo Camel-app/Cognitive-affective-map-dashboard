@@ -43,10 +43,6 @@ export function AuthenticationTitle({isLoading, isError, submitFormEvent}) {
           <TextInput label="Email" placeholder="you@mantine.dev" {...form.getInputProps('email')} required />
           <PasswordInput label="Password" placeholder="Your password" {...form.getInputProps('password')} required mt="md" />
           <Group justify="space-between" mt="lg">
-            <Checkbox label="Remember me" />
-            <Anchor component="button" size="sm">
-              Forgot password?
-            </Anchor>
             {isError &&
               <Text c="red">Entered credentials are invalid</Text>
             }
