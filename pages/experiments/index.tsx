@@ -1,4 +1,4 @@
-import { HeaderSimple } from '../../components/Header/Header';
+import { HeaderSimple } from '@/components/Header/Header';
 import { TableReviews } from '@/components/ExperimentList/ExperimentList';
 import { useEffect, useState } from 'react';
 import { Blockquote, Container, Loader } from '@mantine/core';
@@ -14,28 +14,39 @@ export default function HomePage() {
     fetch(url, {
       credentials: 'include',
     })
-    .then((res) => res.json())
-    .then((data) => {
+      .then((res) => res.json())
+      .then((data) => {
         setIsLoading(false);
         setData(data);
-    }).catch((err) => {
-      setIsLoading(false);
-      setIsError(true);
-    });
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setIsError(true);
+      });
   }, []);
 
   return (
     <>
       <HeaderSimple />
       {data && <TableReviews data={data} />}
-      {isLoading && <Loader color="blue" size="xl" />}
-      {isError && 
-      <Container size={420}>
-        <Blockquote color="red" radius="lg" iconSize={30} mt="xl">
-          It looks like something is not good well. Try again later.
-        </Blockquote>
-      </Container>
-      }
+      {isLoading && (
+        <Container
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Loader color="blue" size="xl" />
+        </Container>
+      )}
+      {isError && (
+        <Container size={420}>
+          <Blockquote color="red" radius="lg" iconSize={30} mt="xl">
+            It looks like something is not good well. Try again later.
+          </Blockquote>
+        </Container>
+      )}
     </>
   );
 }

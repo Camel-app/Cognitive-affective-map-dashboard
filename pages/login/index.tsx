@@ -5,27 +5,26 @@ import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 
 export default function HomePage() {
-  
   async function submitForm(data: any) {
     const body = { email: data.email, password: data.password };
     const url = 'http://localhost:3001' + '/researchers/login';
     setIsLoading(true);
-    
+
     fetch(url, {
       body: JSON.stringify(body),
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
     })
-    .then((res) => res.json())
-    .then((data) => {
-      setIsLoading(false);
-      setCookies('CAM-API-KEY', data.token);
-          router.push('/experiments');
-    }).catch((err) => {
-      setIsLoading(false);
-      setIsError(true);
-    });
-    
+      .then((res) => res.json())
+      .then((data) => {
+        setIsLoading(false);
+        setCookies('CAM-API-KEY', data.token);
+        router.push('/experiments');
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setIsError(true);
+      });
   }
 
   const [cookies, setCookies] = useCookies(['CAM-API-KEY']);

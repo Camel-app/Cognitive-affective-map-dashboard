@@ -3,21 +3,19 @@ import { IconArrowUpRight, IconArrowDownRight } from '@tabler/icons-react';
 import classes from './StatExperiment.module.css';
 import { Daughter, Experiment } from '@/utils/types';
 
-
-export function StatsGridIcons(experiment: Experiment) {
-
+export function StatsGridIcons({ experiment }: any) {
   let arrayValuesNodes: number[] = [];
   let arrayDatesCAMs: string[] = [];
 
-  experiment.daughters.forEach((daughter: Daughter)  => {
-    const currentCam = JSON.parse(daughter.cam);
+  experiment.daughters.forEach((daughter: Daughter) => {
+    const currentCam = daughter.cam;
     arrayDatesCAMs.push(currentCam.date);
-    currentCam.nodes.forEach(element => {
-        if (element.value === 10) {
-            arrayValuesNodes.push(0);
-        }else{
-            arrayValuesNodes.push(element.value);
-        }
+    currentCam.nodes.forEach((element) => {
+      if (element.value === 10) {
+        arrayValuesNodes.push(0);
+      } else {
+        arrayValuesNodes.push(element.value);
+      }
     });
   });
   const dataStat = [
@@ -27,10 +25,19 @@ export function StatsGridIcons(experiment: Experiment) {
       diff: 34,
       text: 'participants joined the experiment',
     },
-    { title: 'Profit', value: arrayValuesNodes.reduce((a, b) => a + b, 0), diff: 13, text: 'concepts have been drawn' },
-    { title: 'Mean valence', value: (sumNodes / arrayValuesNodes.length) || 0, diff: -8, text: 'mean valence over all cams drawn' },
+    {
+      title: 'Profit',
+      value: arrayValuesNodes.reduce((a, b) => a + b, 0),
+      diff: 13,
+      text: 'concepts have been drawn',
+    },
+    {
+      title: 'Mean valence',
+      value: 100 / arrayValuesNodes.length || 0,
+      diff: -8,
+      text: 'mean valence over all cams drawn',
+    },
   ];
-
 
   const stats = dataStat.map((stat) => {
     const DiffIcon = stat.diff > 0 ? IconArrowUpRight : IconArrowDownRight;
@@ -70,9 +77,9 @@ export function StatsGridIcons(experiment: Experiment) {
 
   return (
     <Container>
-    <div className={classes.root}>
-      <SimpleGrid cols={{ base: 1, sm: 3 }}>{stats}</SimpleGrid>
-    </div>
+      <div className={classes.root}>
+        <SimpleGrid cols={{ base: 1, sm: 3 }}>{stats}</SimpleGrid>
+      </div>
     </Container>
   );
 }

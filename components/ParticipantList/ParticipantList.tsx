@@ -5,8 +5,9 @@ import classes from './ParticipantList.module.css';
 import Link from 'next/link';
 
 export function TableParticipants({ data }: any) {
-  const rows = data.experiments.map((row: any) => {
+  console.log(data);
 
+  const rows = data.daughters.map((row: any) => {
     return (
       <Table.Tr key={row.participantID}>
         <Table.Td>
