@@ -6,17 +6,33 @@ import { useCookies } from 'react-cookie';
 import { TableParticipants } from '@/components/ParticipantList/ParticipantList';
 import { useParams, useSearchParams } from 'next/navigation';
 import { GetStaticProps } from 'next';
-import { Blockquote, Container, Loader } from '@mantine/core';
+import {
+  Badge,
+  Blockquote,
+  Button,
+  Container,
+  Loader,
+  Notification,
+  Space,
+  rem,
+} from '@mantine/core';
 import StatusModal from '@/components/StatusModal/StatusModal';
+import Router from 'next/router';
+import { getStatusColor } from '@/utils/generals';
+import { Experiment } from '@/utils/types';
+import { IconCheck } from '@tabler/icons-react';
 
 export default function HomePage() {
   const [cookies, setCookies] = useCookies(['CAM-API-KEY']);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [data, setData] = useState(null);
+  const [experimentContent, setExperimentContent] = useState({} as Experiment);
   const [errorMessage, setErrorMessage] = useState('');
   const [idExperiment, setIdExperiment] = useState('');
+  const [isDataReady, setIsDataReady] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
   const searchParams = useSearchParams();
+  const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />;
 
   useEffect(() => {
     let id = searchParams.get('id') || '';
@@ -27,7 +43,7 @@ export default function HomePage() {
     }
     setIdExperiment(id);
     const url = 'http://localhost:3001' + '/researchers/getExperimentById?id=' + id;
-    console.log(url);
+    console.log(id);
 
     setIsLoading(true);
     fetch(url, {
@@ -43,8 +59,8 @@ export default function HomePage() {
       })
       .then((data) => {
         setIsLoading(false);
-        setData(data);
-        console.log(data);
+        setExperimentContent(data);
+        setIsDataReady(true);
       })
       .catch((err) => {
         setIsLoading(false);
@@ -52,25 +68,99 @@ export default function HomePage() {
       });
   }, []);
 
-  async function getData(id: string, status: string) {
-    console.log(id, status);
-
-    const res = await fetch('http://localhost:3001' + '/researchers/changeExperimentStatus', {
+  async function updateExperimentStatus(id: string, status: string) {
+    fetch('http://localhost:3001' + '/researchers/changeExperimentStatus', {
       body: JSON.stringify({ id: id, status: status }),
+      headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
       method: 'PUT',
-    });
-    const resData = await res.json();
-    console.log(resData);
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setIsError(true);
+      });
+    Router.reload();
+  }
+
+  async function downloadExperiment(id: string, experiment: Experiment) {
+    const blobConfig = new Blob([JSON.stringify(experiment)], { type: 'text/json;charset=utf-8' });
+    const blobUrl = URL.createObjectURL(blobConfig);
+    const anchor = document.createElement('a');
+    anchor.href = blobUrl;
+    anchor.target = '_blank';
+    anchor.download = id + '.json';
+    anchor.click();
+
+    URL.revokeObjectURL(blobUrl);
+  }
+
+  async function deleteExperiment(id: string) {
+    fetch('http://localhost:3001' + '/researchers/deleteExperiment', {
+      body: JSON.stringify({ id: id }),
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      method: 'DELETE',
+    })
+      .then((res) => {
+        setIsDeleted(true);
+        return res.json();
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setIsError(true);
+      });
+  }
+
+  function confirmDeleteExperiment(id: string, name: string) {
+    const resp = window.prompt(
+      `Please enter the name of your experiment ${name} to confirm the deletion and press "Ok":`
+    );
+    if (resp === name) {
+      deleteExperiment(id);
+      setInterval(() => Router.push('/experiments'), 3000);
+    }
   }
 
   return (
     <>
       <HeaderSimple />
-      {data && (
+      {isDeleted && (
+        <Container
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
+          }}
+        >
+          <Notification icon={checkIcon} color="teal" title="Deletion completed!" mt="md">
+            The experiment has been deleted, redirection to home page
+          </Notification>
+        </Container>
+      )}
+      {!isDeleted && isDataReady && (
         <>
-          <StatsGridIcons experiment={data} />
-          <TableParticipants data={data} />
+          <Container
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'column',
+            }}
+          >
+            <h1>{experimentContent.name}</h1>
+            <Space />
+            <Badge variant="outline" color={getStatusColor(experimentContent.status.toUpperCase())}>
+              {experimentContent.status}
+            </Badge>
+          </Container>
+
+          <StatsGridIcons daughters={experimentContent.daughters} />
+          <TableParticipants daughters={experimentContent.daughters} />
           <Container
             style={{
               display: 'flex',
@@ -78,10 +168,24 @@ export default function HomePage() {
               justifyContent: 'center',
             }}
           >
-            <StatusModal id={idExperiment} getDataEvent={getData} />
+            <StatusModal id={idExperiment} getDataEvent={updateExperimentStatus} />
+            <Button
+              variant="outline"
+              onClick={() => confirmDeleteExperiment(idExperiment, experimentContent.name)}
+              style={{ color: 'red', borderColor: 'red' }}
+            >
+              Delete Experiment
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => downloadExperiment(idExperiment, experimentContent)}
+            >
+              Download data
+            </Button>
           </Container>
         </>
       )}
+
       {isLoading && <Loader color="blue" size="xl" />}
       {isError && (
         <Container size={420}>

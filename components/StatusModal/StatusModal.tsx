@@ -2,7 +2,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button } from '@mantine/core';
 import Router, { useRouter } from 'next/router';
 
-export default function StatusModal({ id, getDataEvent }) {
+export default function StatusModal({ id, getDataEvent }: any) {
   const [opened, { open, close }] = useDisclosure(false);
   function getData(id: string, status: string) {
     getDataEvent(id, status);
@@ -44,7 +44,9 @@ export default function StatusModal({ id, getDataEvent }) {
         </div>
       </Modal>
 
-      <Button onClick={open}>Open modal</Button>
+      <Button variant="outline" onClick={open}>
+        Change status
+      </Button>
     </>
   );
 }

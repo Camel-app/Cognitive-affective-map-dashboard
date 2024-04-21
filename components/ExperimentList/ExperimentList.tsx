@@ -3,17 +3,13 @@ import { BsClipboardData, BsDoorOpen } from 'react-icons/bs';
 
 import classes from './ExperimentList.module.css';
 import Link from 'next/link';
+import { getStatusColor } from '@/utils/generals';
 
 export function TableReviews({ data }: any) {
   const rows = data.experiments.map((row: any) => {
     const totalReviews = 10;
     const progression = (row.numberCams / totalReviews) * 100;
-    const mapColor = {
-      active: 'lime',
-      archived: 'violet',
-      completed: 'yellow',
-      inactive: 'red',
-    };
+
     return (
       <Table.Tr key={row._id}>
         <Table.Td>
@@ -24,15 +20,17 @@ export function TableReviews({ data }: any) {
         <Table.Td>{new Date(row.creationDate).toLocaleDateString()}</Table.Td>
         <Table.Td>
           <Anchor component="button" fz="sm">
-            <Badge variant="outline" color={mapColor[row.status]}>
-              {row.status}
-            </Badge>
+            <Badge color={getStatusColor(row.status.toUpperCase())}>{row.status}</Badge>
           </Anchor>
         </Table.Td>
         <Table.Td>{Intl.NumberFormat().format(totalReviews)}</Table.Td>
         <Table.Td>
           <Group justify="space-between">
-            <Text fz="xs" c="teal" fw={700}>
+            <Text
+              fz="xs"
+              c={progression < 99 ? (progression < 41 ? 'yellow' : 'cyan') : 'teal'}
+              fw={700}
+            >
               {progression.toFixed(0)}%
             </Text>
           </Group>
@@ -40,7 +38,7 @@ export function TableReviews({ data }: any) {
             <Progress.Section
               className={classes.progressSection}
               value={progression}
-              color="teal"
+              color={progression < 99 ? (progression < 41 ? 'yellow' : 'lightblue') : 'teal'}
             />
           </Progress.Root>
         </Table.Td>
@@ -67,7 +65,7 @@ export function TableReviews({ data }: any) {
             <Table.Tr>
               <Table.Th>Experiment name</Table.Th>
               <Table.Th>Creation date</Table.Th>
-              <Table.Th>Author</Table.Th>
+              <Table.Th>Status</Table.Th>
               <Table.Th>Collected CAMs</Table.Th>
               <Table.Th>Progress</Table.Th>
             </Table.Tr>

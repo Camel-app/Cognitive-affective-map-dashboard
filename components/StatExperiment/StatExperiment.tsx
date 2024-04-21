@@ -1,13 +1,14 @@
 import { Group, Paper, Text, ThemeIcon, SimpleGrid, Container } from '@mantine/core';
 import { IconArrowUpRight, IconArrowDownRight } from '@tabler/icons-react';
 import classes from './StatExperiment.module.css';
-import { Daughter, Experiment } from '@/utils/types';
+import { Daughter } from '@/utils/types';
 
-export function StatsGridIcons({ experiment }: any) {
+export function StatsGridIcons({ daughters }: any) {
   let arrayValuesNodes: number[] = [];
   let arrayDatesCAMs: string[] = [];
+  console.log(daughters);
 
-  experiment.daughters.forEach((daughter: Daughter) => {
+  daughters.forEach((daughter: Daughter) => {
     const currentCam = daughter.cam;
     arrayDatesCAMs.push(currentCam.date);
     currentCam.nodes.forEach((element) => {
@@ -21,7 +22,7 @@ export function StatsGridIcons({ experiment }: any) {
   const dataStat = [
     {
       title: 'Participants',
-      value: experiment.daughters.length,
+      value: daughters.length,
       diff: 34,
       text: 'participants joined the experiment',
     },
