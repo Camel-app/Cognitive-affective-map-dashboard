@@ -1,13 +1,13 @@
-import type { NextPage } from "next";
-import { HeroBullets } from "../components/welcome/welcome";
+import { Welcome } from '../components/Welcome/Welcome';
+import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
+import { HeaderSimple } from '../components/Header/Header';
 
-const Home: NextPage = () => {
-
-    return (
-        <>
-            <HeroBullets />
-        </>
-    );
-};
-
-export default Home;
+export default function HomePage() {
+  return (
+    <>
+      <HeaderSimple />
+      <Welcome />
+      <ColorSchemeToggle />
+    </>
+  );
+}

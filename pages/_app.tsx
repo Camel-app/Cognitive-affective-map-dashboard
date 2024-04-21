@@ -1,32 +1,21 @@
-import { CookiesProvider } from "react-cookie"
+import '@mantine/core/styles.css';
+import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import { MantineProvider } from '@mantine/core';
-import FooterCentered from "../components/footer/Footer";
-import type { AppProps } from 'next/app'
+import { theme } from '../theme';
 
-import '../styles/globals.css';
-import HeaderSimple from "../components/header/Header";
-
-function MyApp({ Component, pageProps }: AppProps) {
-
-    const data_footer = [
-        { link: '/', label: 'Made by Julius Fenn and Florian Gouret (server administration supported by  Paul Hüttner; project supervised by Prof. Andrea Kiesel)' },
-        { link: '/impressum', label: 'Impressum (Notice)' },
-    ];
-
-    return (
-        <CookiesProvider>
-            <MantineProvider theme={{ fontFamily: 'Open Sans' }} withGlobalStyles withNormalizeCSS>
-                <HeaderSimple />
-                <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
-                    <div style={{ width: "100%" }}>
-                        <Component {...pageProps} />
-                    </div>
-                </div>
-                <FooterCentered links={data_footer} />
-            </MantineProvider>
-        </CookiesProvider>
-    )
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <MantineProvider theme={theme}>
+      <Head>
+        <title>Dashboard</title>
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+        />
+        <link rel="shortcut icon" href="/favicon.svg" />
+      </Head>
+      <Component {...pageProps} />
+    </MantineProvider>
+  );
 }
-
-
-export default MyApp
