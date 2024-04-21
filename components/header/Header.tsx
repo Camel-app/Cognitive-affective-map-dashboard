@@ -6,22 +6,25 @@ import classes from './Header.module.css';
 const links = [
   { link: '/experiments', label: 'Home' },
   { link: '/documentation', label: 'Documentation' },
+];
+const logLinks = [
   { link: '/login', label: 'Log in' },
+  { link: '/logout', label: 'Log out' },
 ];
 
-export function HeaderSimple() {
+export function HeaderSimple({ activeLink, loggedIn }: any) {
   const [opened, { toggle }] = useDisclosure(false);
-  const [active, setActive] = useState(links[0].link);
+  const [active, setActive] = useState(activeLink);
 
-  const items = links.map((link) => (
+  console.log(loggedIn);
+  const items = links.concat(logLinks[loggedIn == false ? 0 : 1]).map((link) => (
     <a
       key={link.label}
       href={link.link}
       className={classes.link}
       data-active={active === link.link || undefined}
       onClick={(event) => {
-        //event.preventDefault();
-        setActive(link.link);
+        setActive(activeLink);
       }}
     >
       {link.label}

@@ -127,7 +127,7 @@ export default function HomePage() {
 
   return (
     <>
-      <HeaderSimple />
+      <HeaderSimple activeLink="/login" loggedIn="true" />
       {isDeleted && (
         <Container
           style={{

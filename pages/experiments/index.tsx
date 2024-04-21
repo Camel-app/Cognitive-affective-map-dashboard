@@ -28,7 +28,7 @@ export default function HomePage() {
 
   return (
     <>
-      <HeaderSimple />
+      <HeaderSimple activeLink="/experiments" loggedIn={true} />
       {data && <TableReviews data={data} />}
       {isLoading && (
         <Container

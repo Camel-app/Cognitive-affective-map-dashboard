@@ -34,7 +34,7 @@ export default function HomePage() {
 
   return (
     <>
-      <HeaderSimple />
+      <HeaderSimple activeLink="/login" loggedIn="false" />
       <AuthenticationTitle submitFormEvent={submitForm} isLoading={isLoading} isError={isError} />
     </>
   );

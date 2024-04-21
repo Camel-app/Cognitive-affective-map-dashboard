@@ -7,7 +7,7 @@ export default function HomePage() {
   const router = useRouter();
   return (
     <>
-      <HeaderSimple />
+      <HeaderSimple loggedIn="false" />
       <Welcome />
     </>
   );

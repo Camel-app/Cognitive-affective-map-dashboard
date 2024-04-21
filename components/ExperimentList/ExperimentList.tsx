@@ -1,11 +1,11 @@
 import { Table, Progress, Anchor, Text, Group, Container, Badge, Button } from '@mantine/core';
 import { BsClipboardData, BsDoorOpen } from 'react-icons/bs';
-
 import classes from './ExperimentList.module.css';
 import Link from 'next/link';
-import { getStatusColor } from '@/utils/generals';
+import { copyToClipboard, getStatusColor } from '@/utils/generals';
 
 export function TableReviews({ data }: any) {
+  const linkApi = 'some-URLs'; //publicRuntimeConfig.DEV_URL;
   const rows = data.experiments.map((row: any) => {
     const totalReviews = 10;
     const progression = (row.numberCams / totalReviews) * 100;
@@ -45,6 +45,22 @@ export function TableReviews({ data }: any) {
         <Table.Td>
           <Group justify="space-between">
             <Text fz="xs" c="teal" fw={700}>
+              <Button
+                leftSection={<BsClipboardData />}
+                variant="subtle"
+                onClick={() => {
+                  copyToClipboard(row._id, linkApi);
+                }}
+                className={classes.button}
+              >
+                Copy link
+              </Button>
+            </Text>
+          </Group>
+        </Table.Td>
+        <Table.Td>
+          <Group justify="space-between">
+            <Text fz="xs" c="teal" fw={700}>
               <Link href={'/experiment?id=' + row._id} passHref>
                 <Button leftSection={<BsDoorOpen />} variant="subtle" className={classes.button}>
                   Enter experiment
@@ -68,6 +84,8 @@ export function TableReviews({ data }: any) {
               <Table.Th>Status</Table.Th>
               <Table.Th>Collected CAMs</Table.Th>
               <Table.Th>Progress</Table.Th>
+              <Table.Th>Link</Table.Th>
+              <Table.Th>See data</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>{rows}</Table.Tbody>
