@@ -20,6 +20,8 @@ import classes from './NewExpForm.module.css';
 
 export function NewExpForm({ isLoading, isError, submitFormEvent }: any) {
   function submitForm(formData: any) {
+    console.log(formData);
+
     let configuration: File = formData.configuration;
     const reader = new FileReader();
     reader.onload = async (e: any) => {
@@ -27,7 +29,7 @@ export function NewExpForm({ isLoading, isError, submitFormEvent }: any) {
       submitFormEvent({
         configuration: text,
         expName: formData.expName,
-        participantsNeeded: formData.participantsNeeded,
+        numberOfParticipantsWanted: formData.numberOfParticipantsWanted,
         link: formData.link,
       });
     };
@@ -35,7 +37,13 @@ export function NewExpForm({ isLoading, isError, submitFormEvent }: any) {
   }
 
   const form = useForm({
-    initialValues: { name: '', participantsNeeded: '', link: '', configuration: '', template: '' },
+    initialValues: {
+      expName: '',
+      numberOfParticipantsWanted: '',
+      link: '',
+      configuration: '',
+      template: '',
+    },
   });
 
   return (
@@ -47,39 +55,37 @@ export function NewExpForm({ isLoading, isError, submitFormEvent }: any) {
         <form onSubmit={form.onSubmit(submitForm)}>
           <TextInput
             label="Name of the experiment"
-            placeholder="you@mantine.dev"
-            {...form.getInputProps('name')}
+            placeholder="a nice name"
+            {...form.getInputProps('expName')}
             required
           />
           <NumberInput
             label="Number of participants needed"
             withAsterisk
             placeholder="10"
-            {...form.getInputProps('participantsNeeded')}
+            {...form.getInputProps('numberOfParticipantsWanted')}
           />
           <TextInput
             label="Link to redirect participants to at the end"
-            placeholder="you@mantine.dev"
+            placeholder="some-url.com"
             {...form.getInputProps('link')}
             required
           />
 
           <FileInput
-            label="Configuration"
-            description="Input description"
+            label="Experiment file"
+            description="File obtained from Cams configurator"
             {...form.getInputProps('configuration')}
           />
-          <FileInput
-            label="Template"
-            description="Input description"
-            {...form.getInputProps('template')}
-          />
+
           <Group justify="space-between" mt="lg">
             {isError && <Text c="red">Entered credentials are invalid</Text>}
           </Group>
-          <Button type="submit" fullWidth mt="xl">
-            Sign in
-          </Button>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <Button type="submit" mt="l" variant="outline" color="green">
+              Add experiment
+            </Button>
+          </div>
         </form>
       </Container>
     </div>

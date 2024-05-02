@@ -37,12 +37,7 @@ export default function HomePage() {
           <Space h="xl" />
           <Container size={420}>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button
-                type="submit"
-                variant="outline"
-                color="green"
-                onClick={() => router.push('/newExperiment')}
-              >
+              <Button variant="outline" color="green" onClick={() => router.push('/newExperiment')}>
                 Add new experiment
               </Button>
             </div>
