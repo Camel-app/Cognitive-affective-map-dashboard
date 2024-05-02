@@ -1,10 +1,24 @@
-import { Table, Progress, Anchor, Text, Group, Container, Badge, Button } from '@mantine/core';
+import {
+  Table,
+  Progress,
+  Anchor,
+  Text,
+  Group,
+  Container,
+  Badge,
+  Button,
+  ScrollArea,
+} from '@mantine/core';
 import { BsClipboardData, BsDoorOpen } from 'react-icons/bs';
 import classes from './ExperimentList.module.css';
 import Link from 'next/link';
 import { copyToClipboard, getStatusColor } from '@/utils/generals';
+import { useState } from 'react';
+import cx from 'clsx';
 
 export function TableReviews({ data }: any) {
+  const [scrolled, setScrolled] = useState(false);
+
   const linkApi = 'some-URLs'; //publicRuntimeConfig.DEV_URL;
   const rows = data.experiments.map((row: any) => {
     const totalReviews = 10;
@@ -75,9 +89,9 @@ export function TableReviews({ data }: any) {
 
   return (
     <Container>
-      <Table.ScrollContainer minWidth={200}>
-        <Table verticalSpacing="xs">
-          <Table.Thead>
+      <ScrollArea h={500} onScrollPositionChange={({ y }) => setScrolled(y !== 0)}>
+        <Table miw={700} verticalSpacing="xs">
+          <Table.Thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
             <Table.Tr>
               <Table.Th>Experiment name</Table.Th>
               <Table.Th>Creation date</Table.Th>
@@ -90,7 +104,7 @@ export function TableReviews({ data }: any) {
           </Table.Thead>
           <Table.Tbody>{rows}</Table.Tbody>
         </Table>
-      </Table.ScrollContainer>
+      </ScrollArea>
     </Container>
   );
 }

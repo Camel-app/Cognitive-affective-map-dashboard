@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-const protectedRoutes = ['/experiments', '/experiment'];
+const protectedRoutes = ['/experiments', '/experiment', '/logout'];
 
 export default function middleware(req: NextRequest) {
   const cookies = req.cookies.get('CAM-API-KEY')?.value;

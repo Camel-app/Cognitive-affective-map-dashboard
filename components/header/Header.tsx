@@ -2,22 +2,25 @@ import { useState } from 'react';
 import { Container, Group, Burger } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import classes from './Header.module.css';
+import { BsClipboardData, BsDoorOpen } from 'react-icons/bs';
 
-const links = [
-  { link: '/experiments', label: 'Home' },
-  { link: '/documentation', label: 'Documentation' },
-];
-const logLinks = [
-  { link: '/login', label: 'Log in' },
-  { link: '/logout', label: 'Log out' },
-];
+const links = {
+  logged: [
+    { link: '/experiments', label: 'Experiments' },
+    { link: '/documentation', label: 'Documentation' },
+    { link: '/logout', label: 'Log out' },
+  ],
+  notLogged: [
+    { link: '/documentation', label: 'Documentation' },
+    { link: '/login', label: 'Log in' },
+  ],
+};
 
 export function HeaderSimple({ activeLink, loggedIn }: any) {
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(activeLink);
 
-  console.log(loggedIn);
-  const items = links.concat(logLinks[loggedIn == false ? 0 : 1]).map((link) => (
+  const items = (loggedIn == true ? links.logged : links.notLogged).map((link) => (
     <a
       key={link.label}
       href={link.link}
@@ -34,6 +37,7 @@ export function HeaderSimple({ activeLink, loggedIn }: any) {
   return (
     <header className={classes.header}>
       <Container size="md" className={classes.inner}>
+        <BsClipboardData size={28} />
         <Group gap={5} visibleFrom="xs">
           {items}
         </Group>
