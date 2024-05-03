@@ -13,10 +13,10 @@ function validateConfiguration(file: string) {
 
 export default function HomePage() {
   const [cookies, setCookies] = useCookies(['CAM-API-KEY']);
-  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [errorStatus, setErrorStatus] = useState(0);
   const [error, setError] = useState('');
+  const [colour, setColour] = useState('');
   const router = useRouter();
 
   async function submitForm(data: any) {
@@ -26,13 +26,10 @@ export default function HomePage() {
       numberOfParticipantsWanted: data.numberOfParticipantsWanted,
       configuration: JSON.stringify(data.configuration),
     };
-    console.log(body);
-    console.log(data);
 
     setIsError(!validateConfiguration(data));
 
     const url = 'http://localhost:3001' + '/researchers/addExperiment';
-    setIsLoading(true);
 
     fetch(url, {
       body: JSON.stringify(body),
@@ -41,22 +38,21 @@ export default function HomePage() {
       credentials: 'include',
     })
       .then((res) => {
-        if (res.status != 201) {
-          setErrorStatus(res.status);
-        }
+        setErrorStatus(res.status);
         return res.json();
       })
       .then((data) => {
         if (errorStatus != 201) {
           setIsError(true);
           setError(data.message);
+          setColour('red');
           return;
         }
-        setIsLoading(false);
-        router.push('/experiments');
+        setIsError(true);
+        setColour('green');
+        setTimeout(() => router.push('/experiments'), 2000);
       })
       .catch((err) => {
-        setIsLoading(false);
         setIsError(true);
       });
   }
@@ -66,7 +62,7 @@ export default function HomePage() {
       <NewExpForm submitFormEvent={submitForm} />
       {isError && (
         <Container size={420}>
-          <Blockquote color="red" radius="lg" iconSize={30} mt="xl">
+          <Blockquote color={colour} radius="lg" iconSize={30} mt="xl">
             {error}
           </Blockquote>
         </Container>
