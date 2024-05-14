@@ -1,7 +1,9 @@
 import { HeaderSimple } from '@/components/Header/Header';
 import { TableReviews } from '@/components/ExperimentList/ExperimentList';
 import { useEffect, useState } from 'react';
-import { Blockquote, Container, Loader } from '@mantine/core';
+import { Blockquote, Button, Container, Loader, Space } from '@mantine/core';
+import { redirect } from 'next/navigation';
+import router from 'next/router';
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,8 +29,21 @@ export default function HomePage() {
 
   return (
     <>
-      <HeaderSimple />
-      {data && <TableReviews data={data} />}
+      <HeaderSimple activeLink="/experiments" loggedIn={true} />
+      {data && (
+        <>
+          <TableReviews data={data} />
+          <Space h="xl" />
+          <Space h="xl" />
+          <Container size={420}>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <Button variant="outline" color="green" onClick={() => router.push('/newExperiment')}>
+                Add new experiment
+              </Button>
+            </div>
+          </Container>
+        </>
+      )}
       {isLoading && (
         <Container
           style={{

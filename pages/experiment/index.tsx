@@ -31,6 +31,7 @@ export default function HomePage() {
   const [idExperiment, setIdExperiment] = useState('');
   const [isDataReady, setIsDataReady] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
+  const [includedData, setIncludedData] = useState(new Set<string>());
   const searchParams = useSearchParams();
   const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />;
 
@@ -68,6 +69,10 @@ export default function HomePage() {
       });
   }, []);
 
+  function getIncludedData(includedData: Set<string>) {
+    setIncludedData(includedData);
+    console.log(includedData);
+  }
   async function updateExperimentStatus(id: string, status: string) {
     fetch('http://localhost:3001' + '/researchers/changeExperimentStatus', {
       body: JSON.stringify({ id: id, status: status }),
@@ -127,7 +132,7 @@ export default function HomePage() {
 
   return (
     <>
-      <HeaderSimple />
+      <HeaderSimple activeLink="/login" loggedIn={true} />
       {isDeleted && (
         <Container
           style={{
@@ -160,12 +165,12 @@ export default function HomePage() {
           </Container>
 
           <StatsGridIcons daughters={experimentContent.daughters} />
-          <TableParticipants daughters={experimentContent.daughters} />
+          <TableParticipants daughters={experimentContent.daughters} callback={getIncludedData} />
           <Container
             style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'space-around',
             }}
           >
             <StatusModal id={idExperiment} getDataEvent={updateExperimentStatus} />
