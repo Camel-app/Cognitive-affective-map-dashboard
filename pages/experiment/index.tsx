@@ -1,11 +1,9 @@
 import { StatsGridIcons } from '@/components/StatExperiment/StatExperiment';
 import { HeaderSimple } from '../../components/Header/Header';
-import { TableReviews } from '@/components/ExperimentList/ExperimentList';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { TableParticipants } from '@/components/ParticipantList/ParticipantList';
-import { useParams, useSearchParams } from 'next/navigation';
-import { GetStaticProps } from 'next';
+import { useSearchParams } from 'next/navigation';
 import {
   Badge,
   Blockquote,
@@ -44,7 +42,6 @@ export default function HomePage() {
     }
     setIdExperiment(id);
     const url = 'http://localhost:3001' + '/researchers/getExperimentById?id=' + id;
-    console.log(id);
 
     setIsLoading(true);
     fetch(url, {

@@ -1,19 +1,6 @@
-import {
-  Table,
-  Progress,
-  Anchor,
-  Text,
-  Group,
-  Container,
-  Badge,
-  Button,
-  Modal,
-  Checkbox,
-} from '@mantine/core';
-import { BsClipboardData, BsDoorOpen } from 'react-icons/bs';
+import { Table, Text, Group, Container, Button, Modal, Checkbox } from '@mantine/core';
+import { BsDoorOpen } from 'react-icons/bs';
 import classes from './ParticipantList.module.css';
-import Link from 'next/link';
-import { Experiment } from '@/utils/types';
 import { useDisclosure } from '@mantine/hooks';
 import { NetworkDiagram } from '../Network/NetworkDiagram';
 import { useState } from 'react';

@@ -1,17 +1,10 @@
 import {
   TextInput,
-  PasswordInput,
-  Checkbox,
-  Anchor,
-  Paper,
   Title,
   Text,
   Container,
   Group,
   Button,
-  Box,
-  LoadingOverlay,
-  Timeline,
   NumberInput,
   FileInput,
 } from '@mantine/core';
