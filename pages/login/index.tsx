@@ -3,6 +3,7 @@ import { AuthenticationTitle } from '@/components/LogingWindow/Authentication';
 import { HeaderSimple } from '../../components/Header/Header';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
+import { FooterSimple } from '../../components/Footer/Footer';
 
 export default function HomePage() {
   async function submitForm(data: any) {
@@ -36,6 +37,7 @@ export default function HomePage() {
     <>
       <HeaderSimple />
       <AuthenticationTitle submitFormEvent={submitForm} isLoading={isLoading} isError={isError} />
+      <FooterSimple />
     </>
   );
 }
