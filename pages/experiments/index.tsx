@@ -2,7 +2,6 @@ import { HeaderSimple } from '@/components/Header/Header';
 import { TableReviews } from '@/components/ExperimentList/ExperimentList';
 import { useEffect, useState } from 'react';
 import { Blockquote, Button, Container, Loader, Space } from '@mantine/core';
-import { redirect } from 'next/navigation';
 import router from 'next/router';
 
 export default function HomePage() {

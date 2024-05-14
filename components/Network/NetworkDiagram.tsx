@@ -1,7 +1,6 @@
 import * as d3 from 'd3';
 import { useEffect, useRef } from 'react';
-import { Data, Link, Node } from './types';
-//import { Data, Link, Node } from './data';
+import { Link, Node } from './types';
 
 type NetworkDiagramProps = {
   width: number;
@@ -37,16 +36,14 @@ export const NetworkDiagram = ({ width, height, rawData }: NetworkDiagramProps) 
   }
   useEffect(() => {
     // set dimension of the canvas element
-    let svg = d3.select(canvasRef.current),
-      margin = 0;
-
+    let svg = d3.select(canvasRef.current);
     const simulation = d3
       .forceSimulation()
       .force('charge', d3.forceManyBody().strength(-10))
       .force('center', d3.forceCenter(width / 2, height / 2));
     //let link = svg.append('g').selectAll('dot').data(links).enter();
 
-    let node = svg.append('g').selectAll('dot').data(nodes).enter();
+    //let node = svg.append('g').selectAll('dot').data(nodes).enter();
     const nodeElements = svg
       .append('g')
       .selectAll('circle')

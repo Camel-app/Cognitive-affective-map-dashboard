@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react';
-import { AuthenticationTitle } from '@/components/LoginWindow/Authentication';
-import { HeaderSimple } from '../../components/Header/Header';
+import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/navigation';
 

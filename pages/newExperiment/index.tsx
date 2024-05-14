@@ -1,18 +1,14 @@
 import { HeaderSimple } from '@/components/Header/Header';
-import { TableReviews } from '@/components/ExperimentList/ExperimentList';
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useCookies } from 'react-cookie';
-import { Blockquote, Container, Loader } from '@mantine/core';
-import { redirect } from 'next/navigation';
+import { Blockquote, Container } from '@mantine/core';
 import { NewExpForm } from '@/components/NewExpForm/NewExpForm';
+import { useState } from 'react';
 
 function validateConfiguration(file: string) {
   return true;
 }
 
 export default function HomePage() {
-  const [cookies, setCookies] = useCookies(['CAM-API-KEY']);
   const [isError, setIsError] = useState(false);
   const [errorStatus, setErrorStatus] = useState(0);
   const [error, setError] = useState('');

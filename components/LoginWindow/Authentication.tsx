@@ -1,8 +1,6 @@
 import {
   TextInput,
   PasswordInput,
-  Checkbox,
-  Anchor,
   Paper,
   Title,
   Text,
@@ -15,7 +13,7 @@ import {
 import { useForm } from '@mantine/form';
 import classes from './Authentication.module.css';
 
-export function AuthenticationTitle({isLoading, isError, submitFormEvent}) {
+export function AuthenticationTitle({ isLoading, isError, submitFormEvent }: any) {
   function submitForm(formData: any) {
     submitFormEvent(formData);
   }
@@ -37,21 +35,34 @@ export function AuthenticationTitle({isLoading, isError, submitFormEvent}) {
           Welcome into your world of thoughts!
         </Title>
 
-      <Box pos="relative">
-        <LoadingOverlay visible={isLoading} zIndex={1000} overlayProps={{ radius: 'sm', blur: 2 }} />
-        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-          <TextInput label="Email" placeholder="you@mantine.dev" {...form.getInputProps('email')} required />
-          <PasswordInput label="Password" placeholder="Your password" {...form.getInputProps('password')} required mt="md" />
-          <Group justify="space-between" mt="lg">
-            {isError &&
-              <Text c="red">Entered credentials are invalid</Text>
-            }
-          </Group>
-          <Button type="submit" fullWidth mt="xl">
-            Sign in
-          </Button>
-        </Paper>
-      </Box>
+        <Box pos="relative">
+          <LoadingOverlay
+            visible={isLoading}
+            zIndex={1000}
+            overlayProps={{ radius: 'sm', blur: 2 }}
+          />
+          <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+            <TextInput
+              label="Email"
+              placeholder="you@mantine.dev"
+              {...form.getInputProps('email')}
+              required
+            />
+            <PasswordInput
+              label="Password"
+              placeholder="Your password"
+              {...form.getInputProps('password')}
+              required
+              mt="md"
+            />
+            <Group justify="space-between" mt="lg">
+              {isError && <Text c="red">Entered credentials are invalid</Text>}
+            </Group>
+            <Button type="submit" fullWidth mt="xl">
+              Sign in
+            </Button>
+          </Paper>
+        </Box>
       </form>
     </Container>
   );

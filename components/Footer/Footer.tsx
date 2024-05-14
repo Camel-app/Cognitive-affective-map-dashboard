@@ -1,5 +1,5 @@
 import { Container, Group, Anchor } from '@mantine/core';
-import { BsClipboardData, BsDoorOpen } from 'react-icons/bs';
+import { BsClipboardData } from 'react-icons/bs';
 import classes from './Footer.module.css';
 
 const links = [
