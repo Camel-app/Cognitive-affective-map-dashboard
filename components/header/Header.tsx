@@ -4,8 +4,10 @@ import { useDisclosure } from '@mantine/hooks';
 import classes from './Header.module.css';
 
 const links = [
-  { link: '/experiments', label: 'Home' },
-  { link: '/documentation', label: 'Documentation' },
+  { link: '/', label: 'Home', target: "_self"},
+  { link: 'https://osf.io/q5hj4/', label: 'Documentation', target: "_blank"},
+  { link: 'https://fennapps.shinyapps.io/CAMtools_CAMapp/', label: 'CAM-App', target: "_blank"},
+  { link: '/register', label: 'Register', target: "_self"},
   { link: '/login', label: 'Log in' },
 ];
 
@@ -17,6 +19,7 @@ export function HeaderSimple() {
     <a
       key={link.label}
       href={link.link}
+      target={link.target}
       className={classes.link}
       data-active={active === link.link || undefined}
       onClick={(event) => {
