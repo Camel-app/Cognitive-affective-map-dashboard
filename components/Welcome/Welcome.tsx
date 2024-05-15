@@ -1,7 +1,8 @@
-import { Title, Text, Anchor, List, ThemeIcon, Button, Group, Center } from '@mantine/core';
+import { Title, Text, List, ThemeIcon, Button, Group, Center } from '@mantine/core';
 import { IconCheck } from '@tabler/icons-react';
 
 import classes from './Welcome.module.css';
+import { Image } from '@mantine/core';
 
 export function Welcome() {
   return (

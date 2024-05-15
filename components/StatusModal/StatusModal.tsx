@@ -1,6 +1,5 @@
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button } from '@mantine/core';
-import Router, { useRouter } from 'next/router';
 
 export default function StatusModal({ id, getDataEvent }: any) {
   const [opened, { open, close }] = useDisclosure(false);

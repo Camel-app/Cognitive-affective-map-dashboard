@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AuthenticationTitle } from '@/components/LogingWindow/Authentication';
+import { AuthenticationTitle } from '@/components/LoginWindow/Authentication';
 import { HeaderSimple } from '../../components/Header/Header';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
@@ -35,7 +35,7 @@ export default function HomePage() {
 
   return (
     <>
-      <HeaderSimple />
+      <HeaderSimple activeLink="/login" loggedIn="false" />
       <AuthenticationTitle submitFormEvent={submitForm} isLoading={isLoading} isError={isError} />
       <FooterSimple />
     </>
