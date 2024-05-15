@@ -1,22 +1,17 @@
-import {
-  Table,
-  Progress,
-  Anchor,
-  Text,
-  Group,
-  Container,
-  Badge,
-  Button,
-  Modal,
-} from '@mantine/core';
-import { BsClipboardData, BsDoorOpen } from 'react-icons/bs';
+import { Table, Text, Group, Container, Button, Modal, Checkbox } from '@mantine/core';
+import { BsDoorOpen } from 'react-icons/bs';
 import classes from './ParticipantList.module.css';
-import Link from 'next/link';
-import { Experiment } from '@/utils/types';
 import { useDisclosure } from '@mantine/hooks';
+import { NetworkDiagram } from '../Network/NetworkDiagram';
+import { useState } from 'react';
 
-export function TableParticipants({ daughters }: any) {
+export function TableParticipants({ daughters, callback }: any) {
+  function getData(includedData: Set<string>) {
+    callback(includedData);
+  }
   const [opened, { open, close }] = useDisclosure(false);
+  const [currentData, setCurrentData] = useState({});
+  const [includedData, setIncludedData] = useState(new Set<string>());
 
   const rows = daughters.map((row: any) => {
     return (
@@ -26,7 +21,10 @@ export function TableParticipants({ daughters }: any) {
         <Group justify="space-between">
           <Text fz="xs" c="teal" fw={700}>
             <Button
-              onClick={open}
+              onClick={() => {
+                setCurrentData(row.cam);
+                open();
+              }}
               leftSection={<BsDoorOpen />}
               variant="subtle"
               className={classes.button}
@@ -35,14 +33,38 @@ export function TableParticipants({ daughters }: any) {
             </Button>
           </Text>
         </Group>
+        <Table.Td>
+          <Checkbox
+            name="includeData"
+            id={row.participantID}
+            label="include"
+            color="lime"
+            onChange={(event) => {
+              const copySet = includedData;
+              if (event.currentTarget.checked) {
+                copySet.add(row.participantID);
+              } else {
+                copySet.delete(row.participantID);
+              }
+              setIncludedData(copySet);
+              getData(includedData);
+            }}
+          />
+        </Table.Td>
       </Table.Tr>
     );
   });
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Network" centered>
-        {/* Modal content */}
+      <Modal
+        opened={opened}
+        onClose={close}
+        title="Map drawn - rendered with a force applied"
+        centered
+        size="auto"
+      >
+        <NetworkDiagram rawData={currentData} width={600} height={600} />
       </Modal>
       <Container>
         <Table.ScrollContainer minWidth={200}>

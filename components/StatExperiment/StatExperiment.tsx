@@ -6,7 +6,6 @@ import { Daughter } from '@/utils/types';
 export function StatsGridIcons({ daughters }: any) {
   let arrayValuesNodes: number[] = [];
   let arrayDatesCAMs: string[] = [];
-  console.log(daughters);
 
   daughters.forEach((daughter: Daughter) => {
     const currentCam = daughter.cam;
