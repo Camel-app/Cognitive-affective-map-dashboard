@@ -1,15 +1,4 @@
-import {
-  Title,
-  Text,
-  Anchor,
-  List,
-  ThemeIcon,
-  Button,
-  Group,
-  Center,
-  Image,
-  Grid,
-} from '@mantine/core';
+import { Title, Text, List, ThemeIcon, Image, Grid } from '@mantine/core';
 import { IconArrowAutofitRight, IconHelp, IconPhoneCalling, IconUsers } from '@tabler/icons-react';
 
 import image from '../../public/logoCAM2.svg';

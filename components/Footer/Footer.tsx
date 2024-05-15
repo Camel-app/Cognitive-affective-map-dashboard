@@ -4,7 +4,7 @@ import classes from './Footer.module.css';
 
 const links = [
   { link: '#', label: 'Contact' },
-  { link: '#', label: 'Privacy' },
+  { link: '#', label: 'Impressum' },
   { link: '#', label: 'Blog' },
 ];
 
