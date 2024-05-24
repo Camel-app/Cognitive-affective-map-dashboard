@@ -1,4 +1,4 @@
-import { Container, Group, Anchor } from '@mantine/core';
+import { Container, Group, Anchor, Divider } from '@mantine/core';
 import { BsClipboardData } from 'react-icons/bs';
 import classes from './Footer.module.css';
 
@@ -22,7 +22,8 @@ export function Footer() {
   ));
 
   return (
-    <div className={classes.footer}>
+    <div>
+      <Divider mt={100}/>
       <Container className={classes.inner}>
         <BsClipboardData size={28} />
         <Group className={classes.links}>{items}</Group>
