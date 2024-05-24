@@ -10,7 +10,7 @@ const links = {
     { link: 'https://osf.io/q5hj4/', label: 'Documentation', target: "_blank"},
     { link: 'https://camgalaxy.github.io/', label: 'C.A.M.E.L. (participant view)', target: "_blank"},
     { link: 'https://fennapps.shinyapps.io/CAMtools_CAMapp/', label: 'CAM-App', target: "_blank"},
-    { link: '/register', label: 'Register', target: "_self"},
+    { link: '#', label: 'Register', target: "_self"},
     { link: '/login', label: 'Log in' },
   ],
   logged: [
