@@ -18,7 +18,7 @@ export function Welcome() {
           Cognitive Affective Map tools to easily create and integrate CAM studies into online
           experiments.
         </Text>
-        <Text color="dimmed" mt="md">
+        <Text c="dimmed" mt="md">
           Build fully functional accessible Cognitive Affective Map experiments faster than ever!
         </Text>
       </Title>
