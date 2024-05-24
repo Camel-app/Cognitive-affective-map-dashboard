@@ -14,8 +14,9 @@ const links = {
     { link: '/login', label: 'Log in' },
   ],
   logged: [
+    { link: '/experiments', label: 'Experiments' },
     { link: 'https://osf.io/q5hj4/', label: 'Documentation', target: "_blank"},
-    { link: '/login', label: 'Log in' },
+    { link: '/logout', label: 'Log out' },
   ],
 };
 
